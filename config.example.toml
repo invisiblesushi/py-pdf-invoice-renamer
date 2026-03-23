@@ -1,0 +1,14 @@
+[extract]
+# Regex is always run against full extracted PDF text.
+# Prefer a named group: (?P<invoice_number>...)
+invoice_number_regex = '(?P<invoice_number>\d+)'
+
+[rename]
+# Must contain {{invoice_number}}.
+# Chinese characters are supported in filename output.
+filename_template = '发票_{{invoice_number}}'
+preserve_pdf_extension = true
+
+[scan]
+# If true, include PDFs in subfolders.
+recursive = false
