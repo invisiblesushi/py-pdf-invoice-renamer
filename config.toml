@@ -1,9 +1,9 @@
 [extract]
-invoice_number_regex = '发票号码[\\s\\S]{0,2000}?(?P<invoice_number>\\d{20})'
+invoice_number_regex = '发票号码[\s\S]{0,2000}?(?P<invoice_number>\d{20})'
 
 [rename]
-filename_template = '{{invoice_number}}TEst'
+filename_template = '{{invoice_number}}'
 preserve_pdf_extension = true
 
 [scan]
-recursive = true
+recursive = false

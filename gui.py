@@ -37,6 +37,11 @@ def ensure_default_config(config_path: Path) -> None:
     config_path.write_text(default_contents, encoding="utf-8")
 
 
+def toml_literal(value: str) -> str:
+    """Serialize user text as a TOML literal string safely."""
+    return "'" + value.replace("'", "''") + "'"
+
+
 class InvoiceRenamerGUI:
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
@@ -250,9 +255,9 @@ class InvoiceRenamerGUI:
 
         contents = (
             "[extract]\n"
-            f"invoice_number_regex = {regex!r}\n\n"
+            f"invoice_number_regex = {toml_literal(regex)}\n\n"
             "[rename]\n"
-            f"filename_template = {template!r}\n"
+            f"filename_template = {toml_literal(template)}\n"
             f"preserve_pdf_extension = {'true' if preserve else 'false'}\n\n"
             "[scan]\n"
             f"recursive = {'true' if recursive else 'false'}\n"
