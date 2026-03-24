@@ -58,6 +58,21 @@ python invoice_renamer.py "C:\path\to\invoices" --config config.toml
 
 If `--config` is omitted, default is `config.toml` in the current directory.
 
+## GUI (multi-folder selection + config editor)
+
+Run:
+
+```bash
+python gui.py
+```
+
+GUI supports:
+- selecting one folder to process,
+- optional "Include subfolders" checkbox to process nested folders too,
+- dry-run checkbox,
+- full in-app config editing (regex/template/flags) with load/save,
+- live output log showing `old_file -> new_file` lines and summaries.
+
 ## Example output
 
 ```text

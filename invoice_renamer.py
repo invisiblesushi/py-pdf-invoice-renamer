@@ -8,7 +8,7 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Callable, Iterable
 
 try:
     import pymupdf as fitz  # Preferred import for modern PyMuPDF.
@@ -157,6 +157,7 @@ def rename_pdfs(
     folder_path: Path,
     config: AppConfig,
     dry_run: bool,
+    logger: Callable[[str], None] = out,
 ) -> Counters:
     counters = Counters()
 
@@ -169,7 +170,7 @@ def rename_pdfs(
             invoice_number = extract_invoice_number(text, config.invoice_number_regex)
             if not invoice_number:
                 counters.skipped += 1
-                out(f"{source_name} -> [SKIPPED: no regex match]")
+                logger(f"{source_name} -> [SKIPPED: no regex match]")
                 continue
 
             target_name = build_target_name(invoice_number, config)
@@ -177,25 +178,25 @@ def rename_pdfs(
 
             if target_path == pdf_path:
                 counters.skipped += 1
-                out(f"{source_name} -> {target_name} [SKIPPED: unchanged]")
+                logger(f"{source_name} -> {target_name} [SKIPPED: unchanged]")
                 continue
 
             if target_path.exists():
                 counters.skipped += 1
-                out(f"{source_name} -> {target_name} [SKIPPED: target exists]")
+                logger(f"{source_name} -> {target_name} [SKIPPED: target exists]")
                 continue
 
             if dry_run:
                 counters.skipped += 1
-                out(f"{source_name} -> {target_name} [DRY-RUN]")
+                logger(f"{source_name} -> {target_name} [DRY-RUN]")
                 continue
 
             pdf_path.rename(target_path)
             counters.renamed += 1
-            out(f"{source_name} -> {target_name}")
+            logger(f"{source_name} -> {target_name}")
         except Exception as exc:  # pragma: no cover - runtime safety
             counters.errors += 1
-            out(f"{source_name} -> [ERROR: {exc}]")
+            logger(f"{source_name} -> [ERROR: {exc}]")
 
     return counters
 

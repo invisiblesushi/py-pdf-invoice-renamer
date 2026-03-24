@@ -1,0 +1,9 @@
+[extract]
+invoice_number_regex = '发票号码[\\s\\S]{0,2000}?(?P<invoice_number>\\d{20})'
+
+[rename]
+filename_template = '{{invoice_number}}TEst'
+preserve_pdf_extension = true
+
+[scan]
+recursive = true
