@@ -2,6 +2,8 @@
 
 Rename invoice PDFs by extracting invoice numbers with a configurable regex.
 
+![GUI screenshot](assets/gui.png)
+
 ## Features
 
 - Scans a folder of PDF files and renames based on extracted invoice numbers.
